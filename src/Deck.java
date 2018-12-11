@@ -23,7 +23,7 @@ public class Deck
 
     public ArrayList<Card> getUnDealt()
     {
-        return unDealt
+        return unDealt;
     }
 
     public ArrayList<Card> getDealt()
