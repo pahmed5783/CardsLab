@@ -1,48 +1,76 @@
 import java.util.ArrayList;
-import java.util.List;
 
-public class Deck {
+public class Deck
+{
+    private ArrayList<Card>unDealt;
+    private ArrayList<Card>Dealt;
 
-    private ArrayList<Card> unDealt, Dealt;
-
-    public Deck(String[] ranks, String[] suits, int[] values){
-        List<Card> unDealt = new ArrayList<Card>();
-        for(int i = 0; i < suits.length; i++){
-            for(int j = 0; j < ranks.length; j++){
-                Card temp = new Card(ranks[j],suits[i],values[j]);
-                unDealt.add(temp);
+    public Deck(String[] ranks, String[] suits, int[] pointValues)
+    {
+        unDealt = new ArrayList<>();
+        Dealt = new ArrayList<>();
+        for(int i=0;i<ranks.length;i++)
+        {
+            for(int j=0;j<suits.length;j++)
+            {
+                for(int k=0;k<pointValues.length;k++)
+                {
+                    unDealt.add(new Card(ranks[i],suits[j],pointValues[k]));
+                }
             }
         }
     }
 
-    public boolean isEmpty(){
-        if(unDealt.size() == 0){
+    public ArrayList<Card> getUnDealt()
+    {
+        return unDealt;
+    }
+
+    public ArrayList<Card> getDealt()
+    {
+        return Dealt;
+    }
+
+    public boolean isEmpty()
+    {
+        if(unDealt.size() == 0)
+        {
             return true;
         }
         return false;
     }
 
-    public int size(){
+    public int size()
+    {
         return unDealt.size();
     }
 
-    public Card deal(){
-        if(!unDealt.isEmpty()){
-            int x = (int)(Math.random() * unDealt.size());
-            Card temp = unDealt.get(x);
-            unDealt.remove(x);
+    public Card deal()
+    {
+        if(unDealt.size()>0)
+        {
+            Card temp = unDealt.get(0);
             Dealt.add(temp);
+            unDealt.remove(0);
             return temp;
         }
         return null;
     }
 
-    public void shuffle(){
-        for(int k = 51; k > 0; k--){
-            int r = (int)(Math.random()*51);
-            Card temp = unDealt.get(r);
-            unDealt.set(r, unDealt.get(k));
-            unDealt.set(k, temp);
+    public void shuffle()
+    {
+        unDealt.addAll(Dealt);
+        while(Dealt.size()>0)
+        {
+            Dealt.remove(0);
+        }
+        for(int i=unDealt.size()-1;i>0;i--)
+        {
+            int pos = (int) (Math.random() * i);
+            Card temp = unDealt.get(i);
+            unDealt.set(i,unDealt.get(i));
+            unDealt.set(pos,temp);
+
         }
     }
 }
